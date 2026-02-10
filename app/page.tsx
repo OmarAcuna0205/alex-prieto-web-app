@@ -1,7 +1,6 @@
-import { supabase } from '@/lib/supabase';
-import ProjectCard from '@/components/ProjectCard';
 
-// Tipado estricto de la respuesta de la BD
+import ProjectCard from '@/components/ProjectCard';
+import { createClient } from '@/utils/supabase/server'; // USAMOS EL DE SERVIDOR// Tipado estricto de la respuesta de la BD
 interface Project {
   id: string;
   title: string;
@@ -13,6 +12,7 @@ interface Project {
 export const revalidate = 0; // Esto fuerza a que la página NO se guarde en caché estático (para desarrollo)
 
 export default async function Home() {
+  const supabase = await createClient();
   const { data: projects, error } = await supabase
     .from('projects')
     .select('*')

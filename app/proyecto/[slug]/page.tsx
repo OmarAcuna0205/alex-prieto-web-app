@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/server'; // USAMOS EL DE SERVIDOR
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -17,6 +17,7 @@ export default async function ProjectDetail({ params }: ProjectPageProps) {
   const { slug } = await params; 
 
   // A partir de aquí, todo sigue igual...
+  const supabase = await createClient();
   const { data: project, error } = await supabase
     .from('projects')
     .select('*')
